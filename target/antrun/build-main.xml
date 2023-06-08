@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <echo message="*******************install-or-package*******************"/>
+  <mkdir dir="D:\程序\大四下期\java报表_java导出Markdown/target/classes"/>
+  <copy todir="D:\程序\大四下期\java报表_java导出Markdown\target/classes" overwrite="true">
+    <fileset dir="D:\程序\大四下期\java报表_java导出Markdown\target" erroronmissingdir="false">
+      <include name="*.jar"/>
+    </fileset>
+  </copy>
+  <move file="D:\程序\大四下期\java报表_java导出Markdown\target/classes/java报表_java导出Markdown.jar" tofile="D:\程序\大四下期\java报表_java导出Markdown\target/java报表_java导出Markdown_hide.jar"/>
+  <copy todir="D:\程序\大四下期\java报表_java导出Markdown\target/classes" overwrite="true">
+    <fileset dir="D:\程序\大四下期\java报表_java导出Markdown\target" erroronmissingdir="false">
+      <include name="*.jar"/>
+    </fileset>
+  </copy>
+  <move file="D:\程序\大四下期\java报表_java导出Markdown\target/classes/java报表_java导出Markdown.jar" tofile="D:\程序\大四下期\java报表_java导出Markdown\target/java报表_java导出Markdown_args.jar"/>
+  <move file="D:\程序\大四下期\java报表_java导出Markdown\target/classes/java报表_java导出Markdown_hide.jar" tofile="D:\程序\大四下期\java报表_java导出Markdown\target/java报表_java导出Markdown_args_save.jar"/>
+  <copy todir="D:/jar包/" overwrite="true">
+    <fileset dir="D:\程序\大四下期\java报表_java导出Markdown\target" erroronmissingdir="false">
+      <include name="*.jar"/>
+    </fileset>
+  </copy>
+  <copy todir="D:\程序\大四下期\java报表_java导出Markdown\target/" overwrite="true">
+    <fileset dir="D:/jar包/" erroronmissingdir="false">
+      <include name="*.bat"/>
+    </fileset>
+  </copy>
+  <copy todir="D:\程序\大四下期\java报表_java导出Markdown\target/" overwrite="true">
+    <fileset dir="D:/jar包/" erroronmissingdir="false">
+      <include name="jar启动器.7z"/>
+    </fileset>
+  </copy>
+</target>
+</project>
