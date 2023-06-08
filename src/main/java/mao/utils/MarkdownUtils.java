@@ -532,7 +532,6 @@ public class MarkdownUtils
             return children == null || children.isEmpty();
         }
 
-        // ~ private methods
 
         /**
          * 解析
@@ -700,12 +699,14 @@ public class MarkdownUtils
                 if (tableData.length > 0 && tableData[0].length > 0)
                 {
                     StringJoiner titles = new StringJoiner(" | "), extras = new StringJoiner(" | ");
+                    titles.add("");
                     for (Object t : tableData[0])
                     {
                         titles.add(t != null ? t.toString() : "");
-                        extras.add("-");
+                        extras.add("----");
                     }
-                    latestData.append("\n\n").append(titles).append('\n').append(extras);
+                    titles.add("");
+                    latestData.append("\n\n").append(titles).append("\n| ").append(extras).append(" |");
                     for (int i = 1; i < tableData.length; i++)
                     {
                         StringJoiner dataJoiner = new StringJoiner(" | ");
@@ -713,7 +714,7 @@ public class MarkdownUtils
                         {
                             dataJoiner.add(tableData[i][j] != null ? tableData[i][j].toString() : "");
                         }
-                        latestData.append('\n').append(dataJoiner);
+                        latestData.append('\n').append("| ").append(dataJoiner).append(" |");
                     }
                 }
             }
