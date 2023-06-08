@@ -230,7 +230,12 @@ public class MarkdownUtils
         /**
          * 链接模板
          */
-        public static final String LINK_TEMPLATE = "[%s▸](%s)";
+        public static final String LINK_TEMPLATE = "[%s](%s)";
+
+        /**
+         * 图片模板
+         */
+        public static final String PHOTO_TEMPLATE = "![%s](%s)";
 
 
         /**
@@ -379,13 +384,35 @@ public class MarkdownUtils
                         ret = String.format(LINK_TEMPLATE, text, text);
                     }
                     break;
+                case PHOTO:
+                    if (hasText && hasValues)
+                    {
+                        Fonts fonts = values.stream().findFirst().orElse(null);
+                        if (fonts == null)
+                        {
+                            break;
+                        }
+                        ret = String.format(PHOTO_TEMPLATE, text, fonts);
+                    }
+                    else if (!hasText && hasValues)
+                    {
+                        Fonts url = values.stream().findFirst().orElse(null);
+                        if (url == null)
+                        {
+                            break;
+                        }
+                        ret = String.format(PHOTO_TEMPLATE, url, url);
+                    }
+                    else if (hasText)
+                    {
+                        ret = String.format(PHOTO_TEMPLATE, text, text);
+                    }
+                    break;
                 case BR:
-                    ret = "<br>";
+                    ret = "\n<br>";
             }
             return ret;
         }
-
-        // ~ private methods
 
 
         /**
@@ -425,6 +452,11 @@ public class MarkdownUtils
              * 链接
              */
             LINK,
+
+            /**
+             * 照片
+             */
+            PHOTO,
             /**
              * 链接列表
              */
@@ -1196,6 +1228,40 @@ public class MarkdownUtils
             }
             return this;
         }
+
+        /**
+         * 照片
+         *
+         * @param name 名字
+         * @param url  url
+         * @return {@link SectionBuilder}
+         */
+        public SectionBuilder photo(String name, String url)
+        {
+            if (name == null || name.length() == 0)
+            {
+                name = url;
+            }
+            if (url != null && url.length() != 0)
+            {
+                MetaData links = new MetaData(MetaData.Type.PHOTO, Fonts.of(name),
+                        Collections.singletonList(Fonts.of(url)));
+                curSec.addChild(new Section(Section.Type.NORMAL, links, curSec, null, curSec.getDepth()));
+            }
+            return this;
+        }
+
+        /**
+         * 照片
+         *
+         * @param url url
+         * @return {@link SectionBuilder}
+         */
+        public SectionBuilder photo(String url)
+        {
+            return photo(null, url);
+        }
+
 
         /**
          * ol
