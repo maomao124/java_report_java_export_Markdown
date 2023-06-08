@@ -492,6 +492,12 @@ public class MarkdownUtils
          */
         private List<Section> children;
 
+
+        /**
+         * 语言类型,java,c++,c,python等
+         */
+        private String languageType = "";
+
         /**
          * 部分
          *
@@ -510,6 +516,17 @@ public class MarkdownUtils
             this.depth = depth;
         }
 
+        /**
+         * 设置语言类型
+         *
+         * @param languageType 语言类型
+         * @return {@link Section}
+         */
+        public Section setLanguageType(String languageType)
+        {
+            this.languageType = languageType;
+            return this;
+        }
 
         /**
          * 添加孩子
@@ -560,7 +577,7 @@ public class MarkdownUtils
                     return parseRefSection(latestData);
                 case CODE:
                     StringBuilder codeBlock = new StringBuilder(latestData.length() + 10);
-                    codeBlock.append("\n```").append(latestData).append("\n```");
+                    codeBlock.append("\n```").append(languageType).append(latestData).append("\n```");
                     return codeBlock;
                 case ORDER_LIST:
                     return parseOrderListSection(latestData);
@@ -1322,6 +1339,24 @@ public class MarkdownUtils
         public SectionBuilder code()
         {
             Section codeSec = new Section(Section.Type.CODE, null, curSec, new ArrayList<>(), curSec.getDepth());
+            curSec.addChild(codeSec);
+            return new SectionBuilder(codeSec, curSec, this);
+        }
+
+        /**
+         * 代码
+         *
+         * @param languageType 语言类型
+         * @return {@link SectionBuilder}
+         */
+        public SectionBuilder code(String languageType)
+        {
+            if (languageType == null)
+            {
+                languageType = "";
+            }
+            Section codeSec = new Section(Section.Type.CODE, null, curSec, new ArrayList<>(), curSec.getDepth());
+            codeSec.setLanguageType(languageType);
             curSec.addChild(codeSec);
             return new SectionBuilder(codeSec, curSec, this);
         }
