@@ -64,6 +64,10 @@ Markdown 是一种轻量级标记语言，创始人为约翰·格鲁伯（John G
 
 工具类：
 
+工具类基于项目[MdKiller](https://github.com/elltor/mdkiller) 构建
+
+<br>
+
 ```java
 package mao.utils;
 
